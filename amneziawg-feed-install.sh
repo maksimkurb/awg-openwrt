@@ -3,7 +3,7 @@
 # Install AmneziaWG from the signed awg-openwrt package feed.
 # Keep this script compatible with BusyBox ash used by OpenWrt.
 
-FEED_ROOT="https://2grey.github.io/awg-openwrt"
+FEED_ROOT="https://maksimkurb.github.io/awg-openwrt"
 LEGACY_FEED_PATTERN="slava-shchipunov.github.io/awg-openwrt"
 LEGACY_FEED_SED_PATTERN="slava-shchipunov\.github\.io/awg-openwrt"
 INSTALL_TRANSLATION=0
@@ -242,7 +242,7 @@ install_with_apk() {
     TEMP_KEY=""
 
     [ -f "$REPOSITORY_CONFIG" ] || : > "$REPOSITORY_CONFIG"
-    sed -i '\|^[[:space:]]*https://2grey\.github\.io/awg-openwrt/.*packages\.adb[[:space:]]*$|d' "$REPOSITORY_CONFIG" ||
+    sed -i '\|^[[:space:]]*https://maksimkurb\.github\.io/awg-openwrt/.*packages\.adb[[:space:]]*$|d' "$REPOSITORY_CONFIG" ||
         die "Unable to update $REPOSITORY_CONFIG."
     printf '%s/packages.adb\n' "$FEED_URL" >> "$REPOSITORY_CONFIG" ||
         die "Unable to write $REPOSITORY_CONFIG."

@@ -9,7 +9,7 @@ English | [Russian](README.md)
 ![OpenWrt 24](https://img.shields.io/badge/OpenWrt-24.10.0_~_24.10.8-blue)
 ![OpenWrt 25](https://img.shields.io/badge/OpenWrt-25.12.0_~_25.12.5-teal)
 
-[![AmneziaWG OpenWrt Feed](https://img.shields.io/badge/AmneziaWG-OpenWrt_Feed-yellow?style=for-the-badge&logo=openwrt)](https://2grey.github.io/awg-openwrt)
+[![AmneziaWG OpenWrt Feed](https://img.shields.io/badge/AmneziaWG-OpenWrt_Feed-yellow?style=for-the-badge&logo=openwrt)](https://maksimkurb.github.io/awg-openwrt)
 
 ## AWG 3.1 Support
 
@@ -33,7 +33,7 @@ When using `HeaderProtectionKey`, the `S1-S4` parameters must be at least 12.
 
 ## Custom package feed (GitHub Pages)
 
-This repository also publishes a full-featured [OpenWrt package feed](https://2grey.github.io/awg-openwrt/) with signed IPK repositories for OpenWrt 24.x and signed APK repositories for OpenWrt 25.x and later.
+This repository also publishes a full-featured [OpenWrt package feed](https://maksimkurb.github.io/awg-openwrt/) with signed IPK repositories for OpenWrt 24.x and signed APK repositories for OpenWrt 25.x and later.
 
 ## Installation
 
@@ -44,7 +44,7 @@ This repository also publishes a full-featured [OpenWrt package feed](https://2g
    Add the `-r` option to install the Russian localization package.
 
    ```sh
-   sh <(wget -O - https://raw.githubusercontent.com/2Grey/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh)
+   sh <(wget -O - https://raw.githubusercontent.com/maksimkurb/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh)
    ```
 
    When migrating from `Slava-Shchipunov/awg-openwrt`, the installer removes
@@ -70,7 +70,7 @@ If you accept, enter the configuration parameters requested by the script. The s
 To run the script, connect to the router via SSH, enter the following command, and follow the on-screen instructions:
 
 ```sh
-sh <(wget -O - https://raw.githubusercontent.com/2Grey/awg-openwrt/refs/heads/master/amneziawg-install.sh)
+sh <(wget -O - https://raw.githubusercontent.com/maksimkurb/awg-openwrt/refs/heads/master/amneziawg-install.sh)
 ```
 
 > [!IMPORTANT]
@@ -117,12 +117,12 @@ both LuCI package variants, legacy feeds, AWG constraints from `/etc/apk/world`,
 the actual LuCI parser status, and the loaded AmneziaWG kernel module version:
 
 ```sh
-sh <(wget -O - https://raw.githubusercontent.com/2Grey/awg-openwrt/refs/heads/master/amneziawg-check.sh)
+sh <(wget -O - https://raw.githubusercontent.com/maksimkurb/awg-openwrt/refs/heads/master/amneziawg-check.sh)
 ```
 
 ### Manual package installation
 
-Download the three required packages for your platform from the [Releases](https://github.com/2Grey/awg-openwrt/releases) page: `amneziawg-tools_*`, `kmod-amneziawg_*`, and `luci-proto-amneziawg_*`. For Russian localization, also download the optional `luci-i18n-amneziawg-ru_*` package. OpenWrt 24.10 uses `.ipk` packages, while OpenWrt 25.12 uses `.apk` packages.
+Download the three required packages for your platform from the [Releases](https://github.com/maksimkurb/awg-openwrt/releases) page: `amneziawg-tools_*`, `kmod-amneziawg_*`, and `luci-proto-amneziawg_*`. For Russian localization, also download the optional `luci-i18n-amneziawg-ru_*` package. OpenWrt 24.10 uses `.ipk` packages, while OpenWrt 25.12 uses `.apk` packages.
 
 #### Selecting packages for your device
 
@@ -132,21 +132,21 @@ Open the release page for your OpenWrt version and use your browser's page searc
 
 #### Supported OpenWrt versions
 
-1. [25.12.5](https://github.com/2Grey/awg-openwrt/releases/tag/v25.12.5) – AWG-3.1
-2. [25.12.4](https://github.com/2Grey/awg-openwrt/releases/tag/v25.12.4) – AWG-3.1
-3. [25.12.3](https://github.com/2Grey/awg-openwrt/releases/tag/v25.12.3) – AWG-3.1
-4. [25.12.2](https://github.com/2Grey/awg-openwrt/releases/tag/v25.12.2) – AWG-3.1
-5. [25.12.1](https://github.com/2Grey/awg-openwrt/releases/tag/v25.12.1) – AWG-3.1
-6. [25.12.0](https://github.com/2Grey/awg-openwrt/releases/tag/v25.12.0) – AWG-3.1
-7. [24.10.8](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.8) – AWG-3.1
-8. [24.10.7](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.7) – AWG-3.1
-9. [24.10.6](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.6) – AWG-3.1
-10. [24.10.5](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.5) – AWG-3.1
-11. [24.10.4](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.4) – AWG-3.1
-12. [24.10.3](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.3) – AWG-3.1
-13. [24.10.2](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.2) – AWG-3.1
-14. [24.10.1](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.1) – AWG-3.1
-15. [24.10.0](https://github.com/2Grey/awg-openwrt/releases/tag/v24.10.0) – AWG-3.1
+1. [25.12.5](https://github.com/maksimkurb/awg-openwrt/releases/tag/v25.12.5) – AWG-3.1
+2. [25.12.4](https://github.com/maksimkurb/awg-openwrt/releases/tag/v25.12.4) – AWG-3.1
+3. [25.12.3](https://github.com/maksimkurb/awg-openwrt/releases/tag/v25.12.3) – AWG-3.1
+4. [25.12.2](https://github.com/maksimkurb/awg-openwrt/releases/tag/v25.12.2) – AWG-3.1
+5. [25.12.1](https://github.com/maksimkurb/awg-openwrt/releases/tag/v25.12.1) – AWG-3.1
+6. [25.12.0](https://github.com/maksimkurb/awg-openwrt/releases/tag/v25.12.0) – AWG-3.1
+7. [24.10.8](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.8) – AWG-3.1
+8. [24.10.7](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.7) – AWG-3.1
+9. [24.10.6](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.6) – AWG-3.1
+10. [24.10.5](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.5) – AWG-3.1
+11. [24.10.4](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.4) – AWG-3.1
+12. [24.10.3](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.3) – AWG-3.1
+13. [24.10.2](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.2) – AWG-3.1
+14. [24.10.1](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.1) – AWG-3.1
+15. [24.10.0](https://github.com/maksimkurb/awg-openwrt/releases/tag/v24.10.0) – AWG-3.1
 
 ## Building packages
 

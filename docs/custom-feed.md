@@ -27,7 +27,7 @@ Feed публикуется workflow `.github/workflows/build-feed.yml` в ве�
 
 Корневой сайт feed:
 
-`https://2grey.github.io/awg-openwrt/`
+`https://maksimkurb.github.io/awg-openwrt/`
 
 ## Автоматическая установка
 
@@ -36,13 +36,13 @@ Feed публикуется workflow `.github/workflows/build-feed.yml` в ве�
 `kmod-amneziawg` и `luci-proto-amneziawg`:
 
 ```sh
-sh <(wget -O - https://raw.githubusercontent.com/2Grey/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh)
+sh <(wget -O - https://raw.githubusercontent.com/maksimkurb/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh)
 ```
 
 Чтобы также установить русскую локализацию LuCI:
 
 ```sh
-sh <(wget -O - https://raw.githubusercontent.com/2Grey/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh) -r
+sh <(wget -O - https://raw.githubusercontent.com/maksimkurb/awg-openwrt/refs/heads/master/amneziawg-feed-install.sh) -r
 ```
 
 Скрипт рассчитан на официальные стабильные сборки OpenWrt, для которых уже
@@ -91,7 +91,7 @@ identity-hash ограничения, созданные при установк
 Сначала скачайте и добавьте public `usign` key:
 
 ```sh
-wget -O /tmp/awg-openwrt-feed.pub https://2grey.github.io/awg-openwrt/keys/awg-openwrt-feed.pub
+wget -O /tmp/awg-openwrt-feed.pub https://maksimkurb.github.io/awg-openwrt/keys/awg-openwrt-feed.pub
 opkg-key add /tmp/awg-openwrt-feed.pub
 rm -f /tmp/awg-openwrt-feed.pub
 ```
@@ -99,7 +99,7 @@ rm -f /tmp/awg-openwrt-feed.pub
 Затем добавьте feed (замените `VERSION`, `TARGET`, `SUBTARGET`):
 
 ```sh
-echo "src/gz awg https://2grey.github.io/awg-openwrt/VERSION/TARGET/SUBTARGET" >> /etc/opkg/customfeeds.conf
+echo "src/gz awg https://maksimkurb.github.io/awg-openwrt/VERSION/TARGET/SUBTARGET" >> /etc/opkg/customfeeds.conf
 opkg update
 opkg install amneziawg-tools kmod-amneziawg luci-proto-amneziawg
 ```
@@ -115,13 +115,13 @@ opkg install amneziawg-tools kmod-amneziawg luci-proto-amneziawg
 
 ```sh
 mkdir -p /etc/apk/keys
-wget -O /etc/apk/keys/awg-openwrt-feed.pem https://2grey.github.io/awg-openwrt/keys/awg-openwrt-feed.pem
+wget -O /etc/apk/keys/awg-openwrt-feed.pem https://maksimkurb.github.io/awg-openwrt/keys/awg-openwrt-feed.pem
 ```
 
 Затем добавьте feed (замените `VERSION`, `TARGET`, `SUBTARGET`):
 
 ```sh
-echo "https://2grey.github.io/awg-openwrt/VERSION/TARGET/SUBTARGET/packages.adb" >> /etc/apk/repositories.d/customfeeds.list
+echo "https://maksimkurb.github.io/awg-openwrt/VERSION/TARGET/SUBTARGET/packages.adb" >> /etc/apk/repositories.d/customfeeds.list
 apk update
 apk add amneziawg-tools kmod-amneziawg luci-proto-amneziawg
 ```
@@ -141,7 +141,7 @@ apk add amneziawg-tools
 
 Public key публикуется по стабильному пути:
 
-`https://2grey.github.io/awg-openwrt/keys/awg-openwrt-feed.pub`
+`https://maksimkurb.github.io/awg-openwrt/keys/awg-openwrt-feed.pub`
 
 Сгенерировать keypair с установленным `usign` можно командой:
 
@@ -162,13 +162,13 @@ test.
 
 Ключи публикуются в стабильном пути:
 
-`https://2grey.github.io/awg-openwrt/keys/awg-openwrt-feed.pem`
+`https://maksimkurb.github.io/awg-openwrt/keys/awg-openwrt-feed.pem`
 
 Для доверенной установки добавьте public key в `/etc/apk/keys/`:
 
 ```sh
 mkdir -p /etc/apk/keys
-wget -O /etc/apk/keys/awg-openwrt-feed.pem https://2grey.github.io/awg-openwrt/keys/awg-openwrt-feed.pem
+wget -O /etc/apk/keys/awg-openwrt-feed.pem https://maksimkurb.github.io/awg-openwrt/keys/awg-openwrt-feed.pem
 apk update
 ```
 

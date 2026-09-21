@@ -537,7 +537,7 @@ jobs:
           set -euo pipefail
           bash .github/scripts/generate-feed-pages.sh \
             "$GITHUB_WORKSPACE/gh-pages-content" \
-            "https://2grey.github.io/awg-openwrt"
+            "https://maksimkurb.github.io/awg-openwrt"
 
       - name: Publish to GitHub Pages branch
         uses: peaceiris/actions-gh-pages@v4

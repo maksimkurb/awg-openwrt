@@ -559,7 +559,7 @@ install_awg_packages() {
     print_info "Detected OpenWrt target: $TARGET, subtarget: $SUBTARGET"
 
     PKGPOSTFIX_BASE="_v${VERSION}_${PKGARCH}_${TARGET}_${SUBTARGET}"
-    BASE_URL="https://github.com/2Grey/awg-openwrt/releases/download/"
+    BASE_URL="https://github.com/maksimkurb/awg-openwrt/releases/download/"
 
     detect_base_awg_version
     remove_conflicting_luci_package "$LUCI_PACKAGE_NAME"
