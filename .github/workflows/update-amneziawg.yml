@@ -1,0 +1,134 @@
+name: Update AmneziaWG Kernel Module
+
+on:
+  schedule:
+    # Weekly on Monday at 04:23 UTC.
+    - cron: "23 4 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-amneziawg-kernel-module
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout master
+        uses: actions/checkout@v7
+        with:
+          ref: master
+          fetch-depth: 0
+
+      - name: Find latest upstream tag
+        id: version
+        env:
+          UPSTREAM_REPOSITORY: https://github.com/amnezia-vpn/amneziawg-linux-kernel-module.git
+        run: |
+          set -euo pipefail
+
+          CURRENT_VERSION=$(sed -n 's/^PKG_VERSION:=//p' kmod-amneziawg/Makefile | head -n1)
+          if ! printf '%s\n' "$CURRENT_VERSION" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+            echo "Unable to determine current version from kmod-amneziawg/Makefile: $CURRENT_VERSION"
+            exit 1
+          fi
+
+          LATEST_TAG=$(
+            git ls-remote --tags --refs "$UPSTREAM_REPOSITORY" 'refs/tags/v*' |
+              awk '{sub("refs/tags/", "", $2); print $2}' |
+              grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' |
+              sort -V |
+              tail -n1
+          )
+
+          if [ -z "$LATEST_TAG" ]; then
+            echo "No upstream release tags matching vX.Y.Z were found."
+            exit 1
+          fi
+
+          LATEST_VERSION=${LATEST_TAG#v}
+
+          echo "Current version: v$CURRENT_VERSION"
+          echo "Latest upstream tag: $LATEST_TAG"
+
+          if [ "$CURRENT_VERSION" = "$LATEST_VERSION" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          NEWEST_VERSION=$(printf '%s\n%s\n' "$CURRENT_VERSION" "$LATEST_VERSION" | sort -V | tail -n1)
+          if [ "$NEWEST_VERSION" != "$LATEST_VERSION" ]; then
+            echo "Upstream latest tag $LATEST_TAG is older than the currently pinned v$CURRENT_VERSION; nothing to do."
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+          echo "version=$LATEST_VERSION" >> "$GITHUB_OUTPUT"
+          echo "tag=$LATEST_TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Update version references
+        if: steps.version.outputs.changed == 'true'
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          python3 <<'PY'
+          import os
+          import re
+          from pathlib import Path
+
+          version = os.environ["NEW_VERSION"]
+
+          replacements = {
+              Path("kmod-amneziawg/Makefile"): [
+                  (r"(?m)^PKG_VERSION:=\S+$", f"PKG_VERSION:={version}"),
+                  (r"(?m)^PKG_RELEASE:=\d+$", "PKG_RELEASE:=1"),
+              ],
+              Path("README.md"): [
+                  (r"(`kmod-amneziawg` — `v)[^`]+(`;)", rf"\g<1>{version}\g<2>"),
+              ],
+              Path("README.en.md"): [
+                  (r"(`kmod-amneziawg` — `v)[^`]+(`;)", rf"\g<1>{version}\g<2>"),
+              ],
+          }
+
+          for path, rules in replacements.items():
+              text = path.read_text()
+              for pattern, replacement in rules:
+                  updated, count = re.subn(pattern, replacement, text, count=1)
+                  if count != 1:
+                      raise SystemExit(f"Expected exactly one match for {pattern!r} in {path}, got {count}")
+                  text = updated
+              path.write_text(text)
+          PY
+
+          git diff --check
+          git diff -- kmod-amneziawg/Makefile README.md README.en.md
+
+      - name: Commit update to master
+        if: steps.version.outputs.changed == 'true'
+        env:
+          NEW_VERSION: ${{ steps.version.outputs.version }}
+        run: |
+          set -euo pipefail
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add kmod-amneziawg/Makefile README.md README.en.md
+          if git diff --cached --quiet; then
+            echo "No changes to commit."
+            exit 0
+          fi
+
+          git commit -m "chore: update AmneziaWG kernel module to v$NEW_VERSION"
+
+          # Avoid overwriting unrelated commits that landed while this workflow was running.
+          git fetch origin master
+          git rebase origin/master
+          git push origin HEAD:master
